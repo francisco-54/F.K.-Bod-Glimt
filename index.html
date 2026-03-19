@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FK Bodø/Glimt — El Sueño Ártico</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --gold:    #f5d020;
+  --gold2:   #d4a900;
+  --black:   #080808;
+  --dark:    #101010;
+  --panel:   #161616;
+  --card:    #1c1c1c;
+  --border:  #262626;
+  --text:    #dcdcdc;
+  --muted:   #666;
+  --white:   #f0f0f0;
+  --red:     #e04040;
+  --green:   #3ecf6e;
+  --blue:    #4898e8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 60px;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 80% at 80% 40%, rgba(245,208,32,.10) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 5% 80%,  rgba(245,208,32,.05) 0%, transparent 60%),
+    linear-gradient(180deg, #080808 0%, #0d0d0d 100%);
+  z-index: 0;
+}
+
+.hero-crest {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(600px, 65vw);
+  opacity: .05;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero > * { position: relative; z-index: 1; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  width: fit-content;
+  margin-bottom: 24px;
+}
+
+.hero-sub-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .22em;
+  color: var(--gold2);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(72px, 11vw, 148px);
+  line-height: .88;
+  letter-spacing: .02em;
+  color: var(--white);
+}
+
+.hero-title em { color: var(--gold); font-style: normal; }
+
+.hero-tagline {
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-top: 18px;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.hero-stat-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 38px;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+
+.hero-stat-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--muted);
+  display: block;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  color: var(--muted);
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+  z-index: 1;
+}
+
+@keyframes bounce {
+  0%,100%{ transform: translateX(-50%) translateY(0); }
+  50%    { transform: translateX(-50%) translateY(6px); }
+}
+
+/* SECTION HEADER */
+.sec-hd {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 36px 48px 28px;
+}
+
+.sec-hd h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: .06em;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.sec-hd .hr { flex: 1; height: 1px; background: var(--border); }
+
+.sec-hd .tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold2);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+hr.div { border: none; border-top: 1px solid var(--border); }
+
+/* HISTORY */
+.history-section { padding: 0 48px 60px; }
+
+.h-intro {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--text);
+  max-width: 780px;
+  margin-bottom: 48px;
+}
+
+.h-intro strong { color: var(--gold); font-weight: 700; }
+
+.timeline { position: relative; padding-left: 36px; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--border) 100%);
+}
+
+.tl-era {
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.tl-era::before {
+  content: '';
+  position: absolute;
+  left: -44px; top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: var(--black);
+  z-index: 1;
+}
+
+.tl-era.hl::before { background: var(--gold); box-shadow: 0 0 14px rgba(245,208,32,.5); }
+
+.tl-year {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  color: var(--gold2);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.tl-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: .05em;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.tl-body {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--text);
+  max-width: 680px;
+}
+
+.tl-body strong { color: var(--gold); font-weight: 700; }
+
+.tl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  background: rgba(245,208,32,.08);
+  border: 1px solid rgba(245,208,32,.25);
+  border-radius: 2px;
+  padding: 4px 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* SHOCKS GRID */
+.shocks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+  padding: 0 48px 60px;
+}
+
+.shock-card {
+  background: var(--panel);
+  padding: 26px 24px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: background .2s;
+}
+
+.shock-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.shock-card.c-gold::before  { background: var(--gold); }
+.shock-card.c-red::before   { background: var(--red); }
+.shock-card.c-blue::before  { background: var(--blue); }
+.shock-card.c-green::before { background: var(--green); }
+
+.shock-card:hover { background: #1e1e1e; }
+
+.shock-comp {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.shock-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  line-height: 1;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.shock-card.c-red   .shock-score { color: var(--red); }
+.shock-card.c-blue  .shock-score { color: var(--blue); }
+.shock-card.c-green .shock-score { color: var(--green); }
+
+.shock-match { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.shock-date  { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 12px; }
+
+.shock-desc { font-size: 13px; font-weight: 300; color: var(--text); line-height: 1.6; }
+.shock-desc strong { color: var(--gold); font-weight: 700; }
+
+/* RISE */
+.rise-section { padding: 0 48px 60px; }
+
+.seasons-track { display: flex; flex-direction: column; gap: 2px; }
+
+.season-row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  background: var(--panel);
+  padding: 16px 20px;
+  gap: 20px;
+  cursor: default;
+  transition: background .15s;
+}
+
+.season-row:hover { background: var(--card); }
+.season-row.peak  { border-left: 3px solid var(--gold); }
+
+.season-yr {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  color: var(--gold2);
+  text-transform: uppercase;
+}
+
+.season-row .comp-name  { font-size: 14px; font-weight: 700; color: var(--white); }
+.season-row .comp-result{ font-size: 13px; font-weight: 300; color: var(--muted); margin-top: 2px; }
+
+.season-stage {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: .06em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.season-stage.sf  { color: var(--green); }
+.season-stage.qf  { color: var(--blue); }
+.season-stage.r16 { color: var(--gold); }
+.season-stage.gs  { color: var(--muted); }
+.season-stage.ko  { color: #a0a0a0; }
+
+/* UCL DETAIL */
+.ucl-section { padding: 0 48px 60px; }
+
+.ucl-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2px;
+}
+
+.journey-wrap { background: var(--panel); padding: 28px 24px; }
+
+.journey-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.j-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.j-step:last-child { border-bottom: none; }
+
+.j-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  text-align: center;
+  line-height: 1.1;
+  flex-shrink: 0;
+}
+
+.j-step.done   .j-dot { border-color: var(--gold);  color: var(--gold); }
+.j-step.lost   .j-dot { border-color: var(--red);   color: var(--red); }
+.j-step.future .j-dot { border-color: var(--border); color: var(--muted); opacity: .4; }
+
+.j-stage {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.j-match { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+
+.j-result {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+}
+
+.j-step.done .j-result { color: var(--green); }
+.j-step.lost .j-result { color: var(--red); }
+
+.j-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* TABS */
+.tabs-wrap { background: var(--panel); display: flex; flex-direction: column; }
+
+.tab-nav { display: flex; border-bottom: 1px solid var(--border); overflow-x: auto; }
+
+.tab-btn {
+  padding: 14px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.match-item {
+  display: grid;
+  grid-template-columns: 76px 1fr 64px;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background .12s;
+}
+
+.match-item:last-child { border-bottom: none; }
+.match-item:hover { background: rgba(255,255,255,.025); }
+
+.match-meta-s {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.match-meta-s strong {
+  display: block;
+  font-size: 8px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold2);
+}
+
+.match-vs  { font-size: 14px; font-weight: 700; color: var(--white); }
+.match-loc { font-size: 11px; font-weight: 300; color: var(--muted); margin-top: 2px; }
+
+.score-b {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  padding: 4px 8px;
+  border: 1.5px solid;
+  text-align: center;
+}
+
+.score-b.w { border-color: var(--green); color: var(--green); }
+.score-b.l { border-color: var(--red);   color: var(--red); }
+.score-b.d { border-color: var(--muted); color: var(--muted); }
+
+.tab-note {
+  padding: 14px 20px;
+  font-size: 12px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+}
+
+/* IDENTITY */
+.identity-section { padding: 0 48px 60px; }
+
+.identity-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2px;
+}
+
+.id-card { background: var(--panel); padding: 28px 24px; }
+
+.crest-ring {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.id-card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: .05em;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.id-card p {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.kv-table { width: 100%; border-collapse: collapse; }
+.kv-table tr { border-bottom: 1px solid var(--border); }
+.kv-table tr:last-child { border-bottom: none; }
+.kv-table td { padding: 8px 0; font-size: 12px; }
+
+.kv-table td:first-child {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  width: 50%;
+}
+
+.kv-table td:last-child { font-weight: 700; color: var(--white); }
+
+.players-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+
+.player-card {
+  background: var(--panel);
+  padding: 20px 22px;
+  transition: background .15s;
+  cursor: default;
+}
+
+.player-card:hover { background: var(--card); }
+
+.player-card .pn { font-size: 15px; font-weight: 700; color: var(--white); }
+
+.player-card .pr {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 3px;
+  margin-bottom: 12px;
+}
+
+.player-card .ps {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.player-card .pd {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* PHILOSOPHY */
+.philosophy {
+  background: var(--panel);
+  margin: 0 48px 60px;
+  padding: 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.philosophy::before {
+  content: '"';
+  position: absolute;
+  top: -10px; left: 24px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 160px;
+  color: rgba(245,208,32,.07);
+  pointer-events: none;
+  line-height: 1;
+}
+
+.philosophy blockquote {
+  font-size: clamp(17px, 2.4vw, 24px);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--white);
+  max-width: 760px;
+  position: relative;
+  z-index: 1;
+}
+
+.philosophy cite {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  margin-top: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+footer p {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(16px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.hero { animation: fadeUp .6s ease both; }
+
+@media (max-width: 860px) {
+  .hero, .sec-hd, .history-section,
+  .shocks-grid, .rise-section, .ucl-section,
+  .identity-section, .philosophy, footer {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .ucl-grid      { grid-template-columns: 1fr; }
+  .identity-grid { grid-template-columns: 1fr; }
+  .players-grid  { grid-template-columns: 1fr; }
+  .season-row    { grid-template-columns: 80px 1fr auto; }
+  .hero-meta     { gap: 20px; }
+  .timeline      { padding-left: 24px; }
+  .tl-era::before { left: -32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-crest" viewBox="0 0 400 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M200 20 L380 80 L380 240 Q380 360 200 430 Q20 360 20 240 L20 80 Z" fill="white"/>
+    <rect x="180" y="80"  width="40" height="280" fill="black"/>
+    <rect x="80"  y="190" width="240" height="40"  fill="black"/>
+  </svg>
+
+  <span class="pill">⚽ Bodø · Noruega · 110ª Temporada</span>
+  <p class="hero-sub-label">El club del Círculo Ártico</p>
+  <h1 class="hero-title">FK BODØ/<em>GLIMT</em></h1>
+  <p class="hero-tagline">De un pueblo de 45,000 habitantes a los octavos de la Champions League. La historia de cómo un equipo del Ártico redefinió los límites del fútbol europeo.</p>
+
+  <div class="hero-meta">
+    <div>
+      <span class="hero-stat-n">1916</span>
+      <span class="hero-stat-l">Año de fundación</span>
+    </div>
+    <div>
+      <span class="hero-stat-n">6</span>
+      <span class="hero-stat-l">Años escalando Europa</span>
+    </div>
+    <div>
+      <span class="hero-stat-n">5</span>
+      <span class="hero-stat-l">Títulos Eliteserien</span>
+    </div>
+    <div>
+      <span class="hero-stat-n">SF</span>
+      <span class="hero-stat-l">UEL 2024/25 · Histórico</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Desplázate</span>
+    <svg width="14" height="18" viewBox="0 0 14 18" fill="none"><path d="M7 1v16M1 11l6 6 6-6" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- HISTORIA -->
+<div class="sec-hd">
+  <h2>Historia del Club</h2>
+  <div class="hr"></div>
+  <span class="tag">1916 → 2026</span>
+</div>
+
+<section class="history-section">
+  <p class="h-intro">
+    FK Bodø/Glimt nació en <strong>1916</strong> en Bodø, una ciudad noruega al norte del Círculo Ártico donde el sol de medianoche ilumina los veranos. Durante décadas fue un club de provincias sin protagonismo continental. Todo cambiaría con la llegada de <strong>Kjetil Knutsen</strong> al banquillo y una filosofía que apostó por identidad propia, cantera y fútbol de alta intensidad — logrando lo que ningún club noruego había conseguido jamás en la historia de la UEFA.
+  </p>
+
+  <div class="timeline">
+
+    <div class="tl-era">
+      <p class="tl-year">1916 — Los orígenes</p>
+      <h3 class="tl-title">Un club de provincia bajo el Ártico</h3>
+      <p class="tl-body">
+        Fundado en 1916, Bodø/Glimt pasó décadas oscilando entre la Primera y Segunda División noruega. Disputó esporádicas competiciones europeas — la Copa de la UEFA <strong>1974/75</strong> fue su primera incursión — y tuvo momentos memorables como la Copa de Ganadores de Copa <strong>1994/95</strong>, donde venció 3–2 al Sampdoria en casa antes de caer en la eliminatoria. Pero el club vivía lejos de los grandes focos.
+      </p>
+    </div>
+
+    <div class="tl-era">
+      <p class="tl-year">2010s — La siembra</p>
+      <h3 class="tl-title">Knutsen transforma la identidad</h3>
+      <p class="tl-body">
+        La llegada de <strong>Kjetil Knutsen</strong> como entrenador implantó un estilo reconocible: presión alta, juego combinativo en <strong>4–3–3</strong>, transiciones verticales rápidas y un vestuario cohesionado por encima de los nombres individuales. El club invirtió en <strong>la academia y el desarrollo de jugadores locales</strong> en lugar de fichajes caros — con un presupuesto de apenas ~€43 millones, construyó una de las filosofías más sólidas del fútbol escandinavo.
+      </p>
+    </div>
+
+    <div class="tl-era hl">
+      <p class="tl-year">2020 — El primer título</p>
+      <h3 class="tl-title">Campeones de Noruega por primera vez en 104 años</h3>
+      <p class="tl-body">
+        En 2020, Bodø/Glimt ganó el <strong>Eliteserien por primera vez en la historia del club</strong>, y lo hizo con autoridad: <strong>19 puntos de ventaja</strong> sobre el segundo clasificado. Ese mismo verano entraron a las previas de Champions, siendo eliminados por Legia Warszawa, pero navegaron hasta la <strong>fase de grupos de la Conference League</strong>, marcando su regreso al escenario europeo tras 16 años de ausencia.
+      </p>
+      <span class="tl-badge">🏆 Primer Eliteserien de la historia del club</span>
+    </div>
+
+    <div class="tl-era hl">
+      <p class="tl-year">21 Oct 2021 — El terremoto</p>
+      <h3 class="tl-title">6–1 a la Roma de Mourinho. Europa se detiene.</h3>
+      <p class="tl-body">
+        En el Aspmyra Stadion, ante 7,800 espectadores bajo el cielo ártico, Bodø/Glimt goleó <strong>6–1 a la AS Roma</strong> de José Mourinho en la Conference League. Fue la primera vez en toda la carrera del técnico portugués que su equipo recibía seis goles en un partido oficial. <strong>Erik Botheim</strong> firmó un hat-trick; <strong>Ola Solbakken</strong> marcó dos. Dos semanas después, empataron 2–2 en el Estadio Olímpico de Roma, confirmando que no fue casualidad.
+        <br/><br/>
+        Glimt cerró la fase de grupos invicto, eliminó al <strong>Celtic FC</strong> (3–1 y 2–0) y al <strong>AZ Alkmaar</strong> en prórroga en octavos, llegando a su <strong>primer cuarto de final europeo de la historia</strong>. Solo Roma, con revancha brutal (4–0 en casa), pudo frenarlos.
+      </p>
+      <span class="tl-badge">⚡ Primera vez Mourinho recibe 6 goles · Cuartos Conference</span>
+    </div>
+
+    <div class="tl-era">
+      <p class="tl-year">2022/23 — Consolidación</p>
+      <h3 class="tl-title">Europa League con Roma, Betis y HJK</h3>
+      <p class="tl-body">
+        Clasificados a la <strong>Europa League</strong> junto a Roma, Real Betis y HJK Helsinki. Terminaron terceros en el grupo y se desviaron a la Conference League, donde cayeron en dieciseisavos. El aprendizaje europeo se seguía acumulando partido a partido, reforzando la cultura de competir sin complejos ante cualquier rival.
+      </p>
+    </div>
+
+    <div class="tl-era">
+      <p class="tl-year">2023/24 — Porto y Olympiacos</p>
+      <h3 class="tl-title">Gigantes eliminados en Conference y Europa</h3>
+      <p class="tl-body">
+        En la Conference League 2023/24 vencieron al <strong>Porto</strong> en fase de grupos. Al año siguiente, en el playoff de la Europa League, eliminaron al <strong>Olympiacos</strong> — el campeón defensor de la Conference League —. La maquinaria noruega derribaba gigantes con regularidad, construyendo una <strong>mentalidad implacable</strong> en eliminatorias.
+      </p>
+    </div>
+
+    <div class="tl-era hl">
+      <p class="tl-year">2024/25 — La cima histórica de Noruega</p>
+      <h3 class="tl-title">Primera semifinal europea de la historia noruega</h3>
+      <p class="tl-body">
+        En la <strong>UEFA Europa League 2024/25</strong>, Bodø/Glimt superó la fase de liga y derrotó sucesivamente al FC Twente, al Olympiacos y, en cuartos de final, a la <strong>Lazio</strong> en uno de los duelos más dramáticos de la temporada: ganaron la ida <strong>2–0</strong> en casa, pero Lazio remontó <strong>3–1</strong> en el Olímpico tras prórroga. En los penales, el portero <strong>Nikita Haikin</strong> detuvo el lanzamiento de Taty Castellanos y, aunque Berg falló el suyo, Haikin volvió a intervenir de forma decisiva para clasificar a Glimt.
+        <br/><br/>
+        <strong>Primera vez en la historia que un club noruego alcanzaba las semifinales de una competición europea de la UEFA.</strong> En semis cayeron ante el Tottenham Hotspur, eventual campeón de la UEL 2024/25.
+      </p>
+      <span class="tl-badge">🏅 Primer club noruego en semifinales de la UEFA — 17 Abr 2025</span>
+    </div>
+
+    <div class="tl-era hl">
+      <p class="tl-year">2025/26 — Champions League</p>
+      <h3 class="tl-title">Del Ártico a los octavos de Champions</h3>
+      <p class="tl-body">
+        En la <strong>UEFA Champions League</strong> por primera vez en su historia, Glimt realizó una fase de liga espectacular: vencieron al <strong>Manchester City 2–0</strong> en casa y ganaron <strong>2–1 en el Atlético de Madrid</strong>, finalizando 23° con 3 puntos y accediendo al playoff. Allí eliminaron al <strong>Inter de Milán</strong> (subcampeón UCL 2024/25) con un global de <strong>5–2</strong>.
+        <br/><br/>
+        En octavos ganaron 3–0 al Sporting CP en la ida (11 mar), pero cayeron <strong>0–5 el 17 de marzo</strong> en Lisboa en prórroga, eliminados 5–3 en el global. <strong>Segunda mejor campaña noruega en Champions League</strong>, solo superada por los cuartos de Rosenborg en 1996/97.
+      </p>
+      <span class="tl-badge">🌟 2ª mejor campaña noruega en toda la historia de Champions</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- GRANDES SORPRESAS -->
+<div class="sec-hd">
+  <h2>Las Grandes Sorpresas Europeas</h2>
+  <div class="hr"></div>
+  <span class="tag">2021 → 2026</span>
+</div>
+
+<div class="shocks-grid">
+  <div class="shock-card c-gold">
+    <p class="shock-comp">Conference League · Fase de Grupos</p>
+    <div class="shock-score">6–1</div>
+    <p class="shock-match">Bodø/Glimt vs AS Roma</p>
+    <p class="shock-date">21 Oct 2021 · Aspmyra Stadion</p>
+    <p class="shock-desc"><strong>Erik Botheim</strong> (hat-trick) y <strong>Solbakken</strong> (2 goles) destruyeron al equipo de Mourinho. Primera vez en la carrera del portugués que su equipo recibía 6 goles en un partido oficial. Tremor global.</p>
+  </div>
+
+  <div class="shock-card c-blue">
+    <p class="shock-comp">Conference League · Play-offs KO</p>
+    <div class="shock-score">5–2</div>
+    <p class="shock-match">vs Celtic FC (Global)</p>
+    <p class="shock-date">Feb 2022 · Eliminatoria</p>
+    <p class="shock-desc">3–1 en Glasgow y 2–0 en casa eliminaron al histórico escocés. Confirmó que el 6–1 a Roma no era un accidente: Glimt era capaz de vencer en eliminatoria a cualquier equipo.</p>
+  </div>
+
+  <div class="shock-card c-gold">
+    <p class="shock-comp">Conference League · Octavos</p>
+    <div class="shock-score">AZ</div>
+    <p class="shock-match">vs AZ Alkmaar (Prórroga)</p>
+    <p class="shock-date">Mar 2022 · Global 4–3</p>
+    <p class="shock-desc">Eliminaron al <strong>líder del Grupo D</strong> en prórroga, alcanzando los <strong>primeros cuartos de final europeos</strong> de su historia. Solo Roma pudo frenarlos en la siguiente ronda.</p>
+  </div>
+
+  <div class="shock-card c-green">
+    <p class="shock-comp">Europa League · Cuartos · 2024/25</p>
+    <div class="shock-score">3–3</div>
+    <p class="shock-match">vs SS Lazio (Global + pens.)</p>
+    <p class="shock-date">17 Abr 2025 · Stadio Olimpico</p>
+    <p class="shock-desc">Ganaron 2–0 en casa pero Lazio remontó 3–1 en prórroga. <strong>Haikin paró el penalti de Castellanos.</strong> Primera semifinal europea de cualquier club noruego en la historia de la UEFA.</p>
+  </div>
+
+  <div class="shock-card c-gold">
+    <p class="shock-comp">Champions League · Fase de Liga</p>
+    <div class="shock-score">2–0</div>
+    <p class="shock-match">vs Manchester City</p>
+    <p class="shock-date">Ene 2026 · Aspmyra Stadion</p>
+    <p class="shock-desc">En pleno invierno ártico, Bodø/Glimt venció al <strong>Manchester City</strong> de Pep Guardiola. Uno de los resultados más resonantes de la historia del club en competición continental.</p>
+  </div>
+
+  <div class="shock-card c-blue">
+    <p class="shock-comp">Champions League · Fase de Liga</p>
+    <div class="shock-score">2–1</div>
+    <p class="shock-match">vs Atlético de Madrid</p>
+    <p class="shock-date">Ene 2026 · Cívitas Metropolitano</p>
+    <p class="shock-desc">Victoria a domicilio ante Simeone. Gol de <strong>Alexander Sørloth</strong> en el 15'. Sellaron la clasificación al playoff de octavos de UCL desde la posición 23.</p>
+  </div>
+
+  <div class="shock-card c-red">
+    <p class="shock-comp">UCL · Playoff de Octavos</p>
+    <div class="shock-score">5–2</div>
+    <p class="shock-match">vs Inter de Milán (Global)</p>
+    <p class="shock-date">Feb 2026 · Eliminatoria</p>
+    <p class="shock-desc">Eliminaron al <strong>subcampeón de la UCL 2024/25</strong>. Ida 4–2 con goles de Brunstad Fet, Hauge, Høgh y Blomberg. La segunda mejor participación noruega en Champions de la historia.</p>
+  </div>
+
+  <div class="shock-card c-gold">
+    <p class="shock-comp">UCL · Octavos · Ida</p>
+    <div class="shock-score">3–0</div>
+    <p class="shock-match">vs Sporting CP</p>
+    <p class="shock-date">11 Mar 2026 · Aspmyra</p>
+    <p class="shock-desc">Victoria contundente en la ida de octavos. Glimt parecía destinado a cuartos de UCL. Pero Sporting respondió con una épica remontada <strong>5–0 en Lisboa</strong> el 17 de marzo (prórroga).</p>
+  </div>
+</div>
+
+<hr class="div" />
+
+<!-- ASCENSO EUROPEO -->
+<div class="sec-hd">
+  <h2>Ascenso Temporada a Temporada</h2>
+  <div class="hr"></div>
+  <span class="tag">2020/21 → 2025/26</span>
+</div>
+
+<section class="rise-section">
+  <div class="seasons-track">
+    <div class="season-row">
+      <span class="season-yr">2020/21</span>
+      <div>
+        <div class="comp-name">Conference League · Primera Fase de Grupos</div>
+        <div class="comp-result">Debut histórico tras 16 años. 2° en Grupo C (12 pts, invictos).</div>
+      </div>
+      <span class="season-stage gs">Fase de Grupos</span>
+    </div>
+
+    <div class="season-row peak">
+      <span class="season-yr">2021/22</span>
+      <div>
+        <div class="comp-name">Conference League · Cuartos de Final</div>
+        <div class="comp-result">6–1 a Roma. Eliminan a Celtic y AZ. Caen ante Roma en cuartos (0–4).</div>
+      </div>
+      <span class="season-stage qf">Cuartos de Final</span>
+    </div>
+
+    <div class="season-row">
+      <span class="season-yr">2022/23</span>
+      <div>
+        <div class="comp-name">Europa League → Conference League</div>
+        <div class="comp-result">Grupo con Roma y Betis. Pasan a Conference. Eliminados en 16avos.</div>
+      </div>
+      <span class="season-stage ko">16avos</span>
+    </div>
+
+    <div class="season-row">
+      <span class="season-yr">2023/24</span>
+      <div>
+        <div class="comp-name">Conference League → Play-off UEL</div>
+        <div class="comp-result">Vencen a Porto en grupos. Eliminan al campeón Olympiacos en play-off.</div>
+      </div>
+      <span class="season-stage ko">Play-off UEL</span>
+    </div>
+
+    <div class="season-row peak">
+      <span class="season-yr">2024/25</span>
+      <div>
+        <div class="comp-name">Europa League · Semifinal 🏅</div>
+        <div class="comp-result">Eliminan a Twente, Olympiacos y Lazio (pens). Caen ante Tottenham en semis.</div>
+      </div>
+      <span class="season-stage sf">Semifinal</span>
+    </div>
+
+    <div class="season-row peak">
+      <span class="season-yr">2025/26</span>
+      <div>
+        <div class="comp-name">Champions League · Octavos de Final 🌟</div>
+        <div class="comp-result">Vencen a Man. City y Atleti. Eliminan al Inter (5–2). Caen ante Sporting (5–3 global).</div>
+      </div>
+      <span class="season-stage r16">Octavos de Final</span>
+    </div>
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- UCL 2025-26 DETALLE -->
+<div class="sec-hd">
+  <h2>Champions League 2025/26 — Detalle</h2>
+  <div class="hr"></div>
+  <span class="tag">Al 17/03/2026</span>
+</div>
+
+<section class="ucl-section">
+  <div class="ucl-grid">
+
+    <div class="journey-wrap">
+      <p class="journey-title">Recorrido en la competición</p>
+
+      <div class="j-step done">
+        <div class="j-dot">FASE<br>LIGA</div>
+        <div>
+          <p class="j-stage">Fase de Liga · 6 partidos</p>
+          <p class="j-match">Posición final: 23°</p>
+          <p class="j-result">3 PTS · W1 D1 L4</p>
+          <p class="j-note">Victoria vs Man City (2–0) y Atleti (2–1 fuera). Empate vs Dortmund (2–2). Clasifican al playoff.</p>
+        </div>
+      </div>
+
+      <div class="j-step done">
+        <div class="j-dot">PLAY<br>OFF</div>
+        <div>
+          <p class="j-stage">Playoff de Octavos</p>
+          <p class="j-match">vs Inter de Milán</p>
+          <p class="j-result">5–2 GLOBAL ✓</p>
+          <p class="j-note">Ida 4–2 en casa. Vuelta suficiente. Eliminación histórica del subcampeón europeo 2024/25.</p>
+        </div>
+      </div>
+
+      <div class="j-step done">
+        <div class="j-dot">IDA<br>16s</div>
+        <div>
+          <p class="j-stage">Octavos de Final · Ida</p>
+          <p class="j-match">vs Sporting CP · Aspmyra</p>
+          <p class="j-result">3–0 ✓</p>
+          <p class="j-note">11 Mar 2026. Victoria contundente que prometía clasificación histórica.</p>
+        </div>
+      </div>
+
+      <div class="j-step lost">
+        <div class="j-dot">VTA<br>16s</div>
+        <div>
+          <p class="j-stage">Octavos de Final · Vuelta</p>
+          <p class="j-match">vs Sporting CP · Lisboa</p>
+          <p class="j-result">0–5 AET · Eliminados 5–3</p>
+          <p class="j-note">17 Mar 2026. Remontada épica de Sporting en prórroga. Goles de Inácio, Gonçalves, L. Suárez (pen.), Araújo y Nel (120+1').</p>
+        </div>
+      </div>
+
+      <div class="j-step future">
+        <div class="j-dot">QF</div>
+        <div>
+          <p class="j-stage">Cuartos de Final</p>
+          <p class="j-match">No alcanzado</p>
+          <p class="j-result">—</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs-wrap">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('t-liga', this)">Fase Liga</button>
+        <button class="tab-btn" onclick="switchTab('t-playoff', this)">Playoff</button>
+        <button class="tab-btn" onclick="switchTab('t-16', this)">Octavos</button>
+      </div>
+
+      <div id="t-liga" class="tab-panel active">
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Jornada 7</strong>20 Ene 2026</div>
+          <div><div class="match-vs">vs Manchester City</div><div class="match-loc">Aspmyra · Local</div></div>
+          <div class="score-b w">2–0</div>
+        </div>
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Jornada 8</strong>28 Ene 2026</div>
+          <div><div class="match-vs">vs Atlético Madrid</div><div class="match-loc">Metropolitano · Visita</div></div>
+          <div class="score-b w">2–1</div>
+        </div>
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Jornada 6</strong>Dic 2025</div>
+          <div><div class="match-vs">vs Borussia Dortmund</div><div class="match-loc">Signal Iduna · Visita</div></div>
+          <div class="score-b d">2–2</div>
+        </div>
+        <p class="tab-note">Terminaron 23° con 3 pts. Victorias ante City y Atleti en las últimas dos fechas sellaron el playoff.</p>
+      </div>
+
+      <div id="t-playoff" class="tab-panel">
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Playoff · Ida</strong>18 Feb 2026</div>
+          <div><div class="match-vs">vs Inter de Milán</div><div class="match-loc">Aspmyra · Local</div></div>
+          <div class="score-b w">4–2</div>
+        </div>
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Playoff · Vuelta</strong>24 Feb 2026</div>
+          <div><div class="match-vs">vs Inter de Milán</div><div class="match-loc">G. Meazza · Visita</div></div>
+          <div class="score-b w">5–2 Agg</div>
+        </div>
+        <p class="tab-note">Brunstad Fet, Hauge, Høgh y Blomberg anotaron en la ida. Eliminación histórica del subcampeón europeo 2024/25.</p>
+      </div>
+
+      <div id="t-16" class="tab-panel">
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Octavos · Ida</strong>11 Mar 2026</div>
+          <div><div class="match-vs">vs Sporting CP</div><div class="match-loc">Aspmyra · Local</div></div>
+          <div class="score-b w">3–0</div>
+        </div>
+        <div class="match-item">
+          <div class="match-meta-s"><strong>Octavos · Vuelta</strong>17 Mar 2026</div>
+          <div><div class="match-vs">vs Sporting CP</div><div class="match-loc">Alvalade · Visita</div></div>
+          <div class="score-b l">0–5 AET</div>
+        </div>
+        <p class="tab-note">Sporting remontó con goles de Inácio, P. Gonçalves, L. Suárez (pen.), Araújo y R. Nel (120+1'). El sueño ártico se apagó en Lisboa el 17 de marzo.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div" />
+
+<!-- IDENTIDAD + JUGADORES -->
+<div class="sec-hd">
+  <h2>Club &amp; Jugadores Clave</h2>
+  <div class="hr"></div>
+  <span class="tag">UCL 2025/26</span>
+</div>
+
+<section class="identity-section">
+  <div class="identity-grid">
+
+    <div class="id-card">
+      <div class="crest-ring">
+        <svg viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23 2 L42 9 L42 26 Q42 38 23 45 Q4 38 4 26 L4 9 Z" fill="#0a0a0a"/>
+          <rect x="20.5" y="9"  width="5" height="28" fill="#f5d020" rx="1"/>
+          <rect x="10"   y="20" width="26" height="5"  fill="#f5d020" rx="1"/>
+        </svg>
+      </div>
+      <h3>FK Bodø/Glimt</h3>
+      <p>El club del Círculo Ártico. Cinco ligas noruegas, un presupuesto de ~€43M y el corazón de todo un país.</p>
+      <table class="kv-table">
+        <tr><td>Fundado</td><td>1916</td></tr>
+        <tr><td>Ciudad</td><td>Bodø, Noruega</td></tr>
+        <tr><td>Estadio</td><td>Aspmyra (8,135)</td></tr>
+        <tr><td>Entrenador</td><td>Kjetil Knutsen</td></tr>
+        <tr><td>Contrato DT</td><td>Hasta 2029</td></tr>
+        <tr><td>Capitán</td><td>Patrick Berg</td></tr>
+        <tr><td>Táctica</td><td>4–3–3 presión alta</td></tr>
+        <tr><td>Colores</td><td>Amarillo y Negro</td></tr>
+        <tr><td>Títulos Nac.</td><td>5× Eliteserien</td></tr>
+      </table>
+    </div>
+
+    <div class="players-grid">
+      <div class="player-card">
+        <div class="pn">Kasper Høgh</div>
+        <div class="pr">Delantero · Dinamarca</div>
+        <div class="ps">5</div>
+        <div class="pd">Goles en UCL 2025/26. Récord para un danés en una sola campaña de Champions. Titular indiscutible.</div>
+      </div>
+      <div class="player-card">
+        <div class="pn">Jens Petter Hauge</div>
+        <div class="pr">Extremo · Noruega</div>
+        <div class="ps">5+</div>
+        <div class="pd">Participaciones en gol en UCL. Motor ofensivo, velocidad y desequilibrio en banda izquierda.</div>
+      </div>
+      <div class="player-card">
+        <div class="pn">Sondre Brunstad Fet</div>
+        <div class="pr">Mediocampista · Noruega</div>
+        <div class="ps">5+</div>
+        <div class="pd">Participaciones en gol en UCL. Penalti decisivo ante Inter. Cerebro del mediocampo.</div>
+      </div>
+      <div class="player-card">
+        <div class="pn">Patrick Berg</div>
+        <div class="pr">MC / Capitán · Noruega</div>
+        <div class="ps">★</div>
+        <div class="pd">Alma y voz del vestuario. Héroe de los penales vs Lazio. Contrato extendido por su liderazgo.</div>
+      </div>
+      <div class="player-card">
+        <div class="pn">Nikita Haikin</div>
+        <div class="pr">Portero · Rusia/Noruega</div>
+        <div class="ps">🧤</div>
+        <div class="pd">Paró el penalti decisivo de Castellanos (Lazio) para llevar a Glimt a la primera semifinal noruega de la historia europea.</div>
+      </div>
+      <div class="player-card">
+        <div class="pn">Ole Didrik Blomberg</div>
+        <div class="pr">Extremo · Noruega</div>
+        <div class="ps">4+</div>
+        <div class="pd">Participaciones en gol. Marcó en el playoff ante Inter. Pressing constante y agilidad en banda.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FILOSOFIA / CITA -->
+<div class="philosophy">
+  <blockquote>
+    Como jugadores, casi sentimos que estamos viviendo en un sueño. Es algo en lo que miraremos atrás dentro de muchos años y probablemente pensaremos que fue un poco surrealista que sucediera. No creo en los milagros — creo en nuestro camino.
+  </blockquote>
+  <cite>— Patrick Berg &amp; Kjetil Knutsen · UEFA.com, 2025–2026</cite>
+</div>
+
+<footer>
+  <p>FK Bodø/Glimt · Fundado 1916 · Bodø, Noruega · #GlimtEuropa</p>
+  <p>Datos verificados al 17 · 03 · 2026</p>
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
